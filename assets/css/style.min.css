@@ -450,12 +450,9 @@ a {
     justify-content: center;
     align-items: center; }
     .main__list-item {
-      display: block;
-      position: relative; }
+      text-align: center; }
       .main__list-item:not(:last-child) {
         margin-bottom: 4rem; }
-      .main__list-item .thumb {
-        text-align: center; }
 
 @media screen and (min-width: 768px) {
   .main {
@@ -471,21 +468,19 @@ a {
       align-items: baseline;
       width: 56.5rem;
       margin: 0 auto;
-      margin-bottom: 0; }
-      .main__list-item:first-child {
-        margin-bottom: 4rem; } }
+      margin-bottom: 0; } }
 
 @media screen and (min-width: 1024px) {
   .main {
     padding-bottom: 0; }
     .main__list {
       flex-wrap: nowrap;
-      width: 100%; } }
+      width: 100%; }
+      .main__list-item:not(:last-child) {
+        margin-bottom: 0; } }
 
 .card {
   position: relative;
-  float: left;
-  /* stack each div horizontally */
   width: 27rem;
   height: 27rem;
   top: 0;
@@ -494,13 +489,21 @@ a {
   .card:not(:last-child) {
     margin-bottom: 3rem; }
 
+@media screen and (max-width: 1023px) {
+  /* click effect front card*/
+  .card.flipped .card__front {
+    transform: perspective(600px) rotateY(-180deg); }
+  /* click effect back card*/
+  .card.flipped .card__back {
+    transform: perspective(600px) rotateY(0deg); } }
+
 @media screen and (min-width: 1024px) {
   .card {
     width: 22rem;
     height: 22rem; }
-    .card:hover > .front {
+    .card:hover > .card__front {
       transform: perspective(600px) rotateY(-180deg); }
-    .card:hover > .back {
+    .card:hover > .card__back {
       transform: perspective(600px) rotateY(0deg); } }
 
 @media screen and (min-width: 1280px) {
@@ -508,45 +511,42 @@ a {
     width: 27rem;
     height: 27rem; } }
 
-/* style the wraper class with all child div's of class .front */
-.front {
+.card__front {
   position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 100%;
   background-color: #fff;
   box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.1);
   border-radius: 2rem;
   cursor: pointer;
+  -webkit-backface-visibility: hidden;
+  /* for Safari */
   backface-visibility: hidden;
-  /* cant see the backside elements as theyre turning around */
-  transition: transform .5s linear 0s; }
-  .front__icon {
+  /* cant see the backside elements */
+  transform: perspective(600px) rotateY(0deg);
+  transition: transform .8s linear; }
+  .card__front-icon {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     position: absolute;
-    top: 6.2rem;
+    top: 5.6rem;
     left: 50%;
     transform: translateX(-50%); }
-    .front__icon--html {
-      width: 122px;
+    .card__front-icon--layout {
+      width: 12.2rem;
       height: 6.6rem; }
-    .front__icon-html, .front__icon-css {
-      width: 6.6rem;
-      height: auto; }
-    .front__icon-js {
+    .card__front-icon--js {
       width: 6.9rem;
       height: 6.6rem;
       margin: 0 auto; }
-    .front__icon-java {
+    .card__front-icon--java {
       width: 4.4rem;
       height: 8rem; }
-    .front__icon-python {
+    .card__front-icon--python {
       width: 6.6rem;
       height: 6.6rem; }
-  .front__title {
+  .card__front-title {
     position: absolute;
     top: 17.2rem;
     left: 50%;
@@ -558,63 +558,53 @@ a {
     text-align: center;
     color: #000; }
 
-@media screen and (max-width: 1023px) {
-  /* click effect */
-  .card.effect__click.flipped .front {
-    transform: perspective(600px) rotateY(-180deg); } }
-
 @media screen and (min-width: 1024px) {
-  .front__title {
+  .card__front-title {
     top: 14rem;
     font-size: 2.6rem; } }
 
 @media screen and (min-width: 1280px) {
-  .front__title {
+  .card__front-title {
     top: 17.2rem;
     font-size: 3.6rem; } }
 
-/* style the wrapper class with all child div's of class .back */
-.back {
+.card__back {
   position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 100%;
   background-color: #121D2E;
   color: #8C97AC;
   border-radius: 2rem;
   cursor: pointer;
+  -webkit-backface-visibility: hidden;
+  /* for Safari */
   backface-visibility: hidden;
-  /* cant see the frontside elements as theyre turning around */
-  transition: transform .5s linear 0s;
-  transform: perspective(60rem) rotateY(-180deg); }
-  .back__title {
-    position: absolute;
-    top: 1.5rem;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 1.8rem;
-    font-weight: 700; }
-  .back__text {
-    position: absolute;
-    top: 50px;
+  /* cant see the frontside elements */
+  transform: perspective(600px) rotateY(180deg);
+  transition: transform .8s linear;
+  transform: rotateY(-180deg); }
+  .card__back-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-top: 2rem; }
+  .card__back-text {
     font-size: 1.4rem;
-    padding: 0 1rem; }
-
-@media screen and (max-width: 1023px) {
-  .card.effect__click.flipped .back {
-    transform: perspective(60rem) rotateY(0); } }
+    text-align: left;
+    padding: 0 1rem;
+    margin-top: 2rem; }
 
 @media screen and (min-width: 1024px) {
-  .back__title {
+  .card__back-title {
     font-size: 1.6rem; }
-  .back__text {
-    font-size: 1.2rem; } }
+  .card__back-text {
+    font-size: 1.2rem;
+    padding: 0 1.6rem;
+    margin-top: 1rem; } }
 
 @media screen and (min-width: 1280px) {
-  .back__title {
+  .card__back-title {
     font-size: 1.8rem; }
-  .back__text {
+  .card__back-text {
     font-size: 1.5rem; } }
 
 .footer {
@@ -712,6 +702,7 @@ a {
     border: none; } }
 
 .btn__link {
+  display: inline-block;
   padding: 1.2rem 4.5rem;
   background-color: #FF6C00;
   font-family: inherit;

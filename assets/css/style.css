@@ -530,15 +530,18 @@ a {
 
 .main__list-item {
     display: block;
-    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: -webkit-transform 0.8s;
+    transition: transform 0.8s;
+    transition: transform 0.8s, -webkit-transform 0.8s;
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
 }
 
 .main__list-item:not(:last-child) {
     margin-bottom: 4rem;
-}
-
-.main__list-item .thumb {
-    text-align: center;
 }
 
 @media screen and (min-width: 768px) {
@@ -566,7 +569,7 @@ a {
         margin-bottom: 0;
     }
 
-    .main__list-item:first-child {
+    .main__list-item:nth-child(1) {
         margin-bottom: 4rem;
     }
 }
@@ -585,8 +588,6 @@ a {
 
 .card {
     position: relative;
-    float: left;
-  /* stack each div horizontally */
     width: 27rem;
     height: 27rem;
     top: 0;
@@ -598,10 +599,33 @@ a {
     margin-bottom: 3rem;
 }
 
+@media screen and (max-width: 1023px) {
+  /* click effect front card*/
+    .card.flipped .front {
+        -webkit-transform: rotateY(-180deg);
+        transform: rotateY(-180deg);
+    }
+  /* click effect back card*/
+    .card.flipped .back {
+        -webkit-transform: rotateY(0);
+        transform: rotateY(0);
+    }
+}
+
 @media screen and (min-width: 1024px) {
     .card {
         width: 22rem;
         height: 22rem;
+    }
+
+    .card:hover > .front {
+        -webkit-transform: rotateY(-180deg);
+        transform: rotateY(-180deg);
+    }
+
+    .card:hover > .back {
+        -webkit-transform: rotateY(0deg);
+        transform: rotateY(0deg);
     }
 }
 
@@ -613,7 +637,7 @@ a {
 }
 
 /* style the wraper class with all child div's of class .front */
-.front {
+.card__front {
   position: absolute;
   top: 0;
   left: 0;
@@ -629,7 +653,7 @@ a {
   transition: -webkit-transform .5s linear 0s;
   transition: transform .5s linear 0s;
   transition: transform .5s linear 0s, -webkit-transform .5s linear 0s; }
-  .front__icon {
+  .card__front-icon {
     display: -ms-flexbox;
     display: flex;
     -ms-flex-direction: row;
@@ -641,23 +665,23 @@ a {
     left: 50%;
     -webkit-transform: translateX(-50%);
             transform: translateX(-50%); }
-    .front__icon--html {
-      width: 122px;
+    .card__front-icon--html {
+      width: 12.2rem;
       height: 6.6rem; }
-    .front__icon-html, .front__icon-css {
+    .card__front-icon-html, .card__front-icon-css {
       width: 6.6rem;
       height: auto; }
-    .front__icon-js {
+    .card__front-icon-js {
       width: 6.9rem;
       height: 6.6rem;
       margin: 0 auto; }
-    .front__icon-java {
+    .card__front-icon-java {
       width: 4.4rem;
       height: 8rem; }
-    .front__icon-python {
+    .card__front-icon-python {
       width: 6.6rem;
       height: 6.6rem; }
-  .front__title {
+  .card__front-title {
     position: absolute;
     top: 17.2rem;
     left: 50%;
@@ -670,23 +694,18 @@ a {
     text-align: center;
     color: #000; }
 
-/* click effect */
-.card.effect__click.flipped .front {
-  -webkit-transform: perspective(600px) rotateY(-180deg);
-          transform: perspective(600px) rotateY(-180deg); }
-
 @media screen and (min-width: 1024px) {
-  .front__title {
+  .card__front-title {
     top: 14rem;
     font-size: 2.6rem; } }
 
 @media screen and (min-width: 1280px) {
-  .front__title {
+  .card__front-title {
     top: 17.2rem;
     font-size: 3.6rem; } }
 
 /* style the wrapper class with all child div's of class .back */
-.back {
+.card__back {
     position: absolute;
     top: 0;
     left: 0;
@@ -702,11 +721,11 @@ a {
     transition: -webkit-transform .5s linear 0s;
     transition: transform .5s linear 0s;
     transition: transform .5s linear 0s, -webkit-transform .5s linear 0s;
-    -webkit-transform: perspective(60rem) rotateY(-180deg);
-    transform: perspective(60rem) rotateY(-180deg);
+    -webkit-transform: rotateY(-180deg);
+    transform: rotateY(-180deg);
 }
 
-.back__title {
+.card__back-title {
     position: absolute;
     top: 1.5rem;
     left: 50%;
@@ -716,39 +735,29 @@ a {
     font-weight: 700;
 }
 
-.back__text {
+.card__back-text {
     position: absolute;
     top: 50px;
     font-size: 1.4rem;
     padding: 0 1rem;
 }
 
-.card.effect__click.flipped .back {
-    -webkit-transform: perspective(60rem) rotateY(0);
-    transform: perspective(60rem) rotateY(0);
-}
-
 @media screen and (min-width: 1024px) {
-    .back {
-        -webkit-transform: perspective(60rem) rotateY(180deg);
-        transform: perspective(60rem) rotateY(180deg);
-    }
-
-    .back__title {
+    .back-title {
         font-size: 1.6rem;
     }
 
-    .back__text {
+    .back-text {
         font-size: 1.2rem;
     }
 }
 
 @media screen and (min-width: 1280px) {
-    .card__back__title {
+    .back-title {
         font-size: 1.8rem;
     }
 
-    .card__back__text {
+    .back-text {
         font-size: 1.5rem;
     }
 }
@@ -903,6 +912,7 @@ a {
 }
 
 .btn__link {
+    display: inline-block;
     padding: 1.2rem 4.5rem;
     background-color: #FF6C00;
     font-family: inherit;
