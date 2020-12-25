@@ -529,15 +529,7 @@ a {
 }
 
 .main__list-item {
-    display: block;
-    width: 100%;
-    height: 100%;
     text-align: center;
-    transition: -webkit-transform 0.8s;
-    transition: transform 0.8s;
-    transition: transform 0.8s, -webkit-transform 0.8s;
-    -webkit-transform-style: preserve-3d;
-    transform-style: preserve-3d;
 }
 
 .main__list-item:not(:last-child) {
@@ -568,10 +560,6 @@ a {
         margin: 0 auto;
         margin-bottom: 0;
     }
-
-    .main__list-item:nth-child(1) {
-        margin-bottom: 4rem;
-    }
 }
 
 @media screen and (min-width: 1024px) {
@@ -583,6 +571,10 @@ a {
         -ms-flex-wrap: nowrap;
         flex-wrap: nowrap;
         width: 100%;
+    }
+
+    .main__list-item:not(:last-child) {
+        margin-bottom: 0;
     }
 }
 
@@ -601,14 +593,14 @@ a {
 
 @media screen and (max-width: 1023px) {
   /* click effect front card*/
-    .card.flipped .front {
-        -webkit-transform: rotateY(-180deg);
-        transform: rotateY(-180deg);
+    .card.flipped .card__front {
+        -webkit-transform: perspective(600px) rotateY(-180deg);
+        transform: perspective(600px) rotateY(-180deg);
     }
   /* click effect back card*/
-    .card.flipped .back {
-        -webkit-transform: rotateY(0);
-        transform: rotateY(0);
+    .card.flipped .card__back {
+        -webkit-transform: perspective(600px) rotateY(0deg);
+        transform: perspective(600px) rotateY(0deg);
     }
 }
 
@@ -618,14 +610,14 @@ a {
         height: 22rem;
     }
 
-    .card:hover > .front {
-        -webkit-transform: rotateY(-180deg);
-        transform: rotateY(-180deg);
+    .card:hover > .card__front {
+        -webkit-transform: perspective(600px) rotateY(-180deg);
+        transform: perspective(600px) rotateY(-180deg);
     }
 
-    .card:hover > .back {
-        -webkit-transform: rotateY(0deg);
-        transform: rotateY(0deg);
+    .card:hover > .card__back {
+        -webkit-transform: perspective(600px) rotateY(0deg);
+        transform: perspective(600px) rotateY(0deg);
     }
 }
 
@@ -636,79 +628,90 @@ a {
     }
 }
 
-/* style the wraper class with all child div's of class .front */
 .card__front {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: #fff;
-  box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.1);
-  border-radius: 2rem;
-  cursor: pointer;
-  -webkit-backface-visibility: hidden;
-          backface-visibility: hidden;
-  /* cant see the backside elements as theyre turning around */
-  transition: -webkit-transform .5s linear 0s;
-  transition: transform .5s linear 0s;
-  transition: transform .5s linear 0s, -webkit-transform .5s linear 0s; }
-  .card__front-icon {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.1);
+    border-radius: 2rem;
+    cursor: pointer;
+    -webkit-backface-visibility: hidden;
+  /* for Safari */
+    backface-visibility: hidden;
+  /* cant see the backside elements */
+    -webkit-transform: perspective(600px) rotateY(0deg);
+    transform: perspective(600px) rotateY(0deg);
+    transition: -webkit-transform .8s linear;
+    transition: transform .8s linear;
+    transition: transform .8s linear, -webkit-transform .8s linear;
+}
+
+.card__front-icon {
     display: -ms-flexbox;
     display: flex;
     -ms-flex-direction: row;
-        flex-direction: row;
+    flex-direction: row;
     -ms-flex-pack: justify;
-        justify-content: space-between;
+    justify-content: space-between;
     position: absolute;
-    top: 6.2rem;
+    top: 5.6rem;
     left: 50%;
     -webkit-transform: translateX(-50%);
-            transform: translateX(-50%); }
-    .card__front-icon--html {
-      width: 12.2rem;
-      height: 6.6rem; }
-    .card__front-icon-html, .card__front-icon-css {
-      width: 6.6rem;
-      height: auto; }
-    .card__front-icon-js {
-      width: 6.9rem;
-      height: 6.6rem;
-      margin: 0 auto; }
-    .card__front-icon-java {
-      width: 4.4rem;
-      height: 8rem; }
-    .card__front-icon-python {
-      width: 6.6rem;
-      height: 6.6rem; }
-  .card__front-title {
+    transform: translateX(-50%);
+}
+
+.card__front-icon--layout {
+    width: 12.2rem;
+    height: 6.6rem;
+}
+
+.card__front-icon--js {
+    width: 6.9rem;
+    height: 6.6rem;
+    margin: 0 auto;
+}
+
+.card__front-icon--java {
+    width: 4.4rem;
+    height: 8rem;
+}
+
+.card__front-icon--python {
+    width: 6.6rem;
+    height: 6.6rem;
+}
+
+.card__front-title {
     position: absolute;
     top: 17.2rem;
     left: 50%;
     -webkit-transform: translateX(-50%);
-            transform: translateX(-50%);
+    transform: translateX(-50%);
     font-family: Montserrat, sans-serif;
     font-weight: 700;
     font-size: 3.6rem;
     line-height: 4.4rem;
     text-align: center;
-    color: #000; }
+    color: #000;
+}
 
 @media screen and (min-width: 1024px) {
-  .card__front-title {
-    top: 14rem;
-    font-size: 2.6rem; } }
+    .card__front-title {
+        top: 14rem;
+        font-size: 2.6rem;
+    }
+}
 
 @media screen and (min-width: 1280px) {
-  .card__front-title {
-    top: 17.2rem;
-    font-size: 3.6rem; } }
+    .card__front-title {
+        top: 17.2rem;
+        font-size: 3.6rem;
+    }
+}
 
-/* style the wrapper class with all child div's of class .back */
 .card__back {
     position: absolute;
-    top: 0;
-    left: 0;
     width: 100%;
     height: 100%;
     background-color: #121D2E;
@@ -716,48 +719,49 @@ a {
     border-radius: 2rem;
     cursor: pointer;
     -webkit-backface-visibility: hidden;
+  /* for Safari */
     backface-visibility: hidden;
-  /* cant see the frontside elements as theyre turning around */
-    transition: -webkit-transform .5s linear 0s;
-    transition: transform .5s linear 0s;
-    transition: transform .5s linear 0s, -webkit-transform .5s linear 0s;
+  /* cant see the frontside elements */
+    -webkit-transform: perspective(600px) rotateY(180deg);
+    transform: perspective(600px) rotateY(180deg);
+    transition: -webkit-transform .8s linear;
+    transition: transform .8s linear;
+    transition: transform .8s linear, -webkit-transform .8s linear;
     -webkit-transform: rotateY(-180deg);
     transform: rotateY(-180deg);
 }
 
 .card__back-title {
-    position: absolute;
-    top: 1.5rem;
-    left: 50%;
-    -webkit-transform: translateX(-50%);
-    transform: translateX(-50%);
-    font-size: 1.8rem;
+    font-size: 2.2rem;
     font-weight: 700;
+    margin-top: 2rem;
 }
 
 .card__back-text {
-    position: absolute;
-    top: 50px;
     font-size: 1.4rem;
+    text-align: left;
     padding: 0 1rem;
+    margin-top: 2rem;
 }
 
 @media screen and (min-width: 1024px) {
-    .back-title {
+    .card__back-title {
         font-size: 1.6rem;
     }
 
-    .back-text {
+    .card__back-text {
         font-size: 1.2rem;
+        padding: 0 1.6rem;
+        margin-top: 1rem;
     }
 }
 
 @media screen and (min-width: 1280px) {
-    .back-title {
+    .card__back-title {
         font-size: 1.8rem;
     }
 
-    .back-text {
+    .card__back-text {
         font-size: 1.5rem;
     }
 }
