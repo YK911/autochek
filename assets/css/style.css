@@ -560,6 +560,14 @@ a {
         margin: 0 auto;
         margin-bottom: 0;
     }
+
+    .main-item:first-child {
+        margin-bottom: 4rem;
+    }
+
+    .main-item:not(:last-child) {
+        margin-bottom: 0;
+    }
 }
 
 @media screen and (min-width: 1024px) {
@@ -571,10 +579,6 @@ a {
         -ms-flex-wrap: nowrap;
         flex-wrap: nowrap;
         width: 100%;
-    }
-
-    .main__list-item:not(:last-child) {
-        margin-bottom: 0;
     }
 }
 
